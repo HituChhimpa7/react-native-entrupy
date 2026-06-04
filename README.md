@@ -14,11 +14,13 @@ npm install react-native-entrupy
 
 
 ```js
-import { multiply } from 'react-native-entrupy';
+import { startCapture, generateAuthorizationRequest } from 'react-native-entrupy';
 
-// ...
-
-const result = multiply(3, 7);
+// Example: Start a capture session
+const handleCapture = async () => {
+  const isSuccess = await startCapture('Bags', 'Gucci', 'Handbag', 'item_12345');
+  console.log('Capture success:', isSuccess);
+};
 ```
 
 
