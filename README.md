@@ -20,10 +20,10 @@ Install the package using your preferred package manager:
 
 ```sh
 # Using npm
-npm install react-native-entrupy
+npm install @hituchhimpa/react-native-entrupy
 
 # Using yarn
-yarn add react-native-entrupy
+yarn add @hituchhimpa/react-native-entrupy
 ```
 
 ### 🍎 iOS Setup
@@ -40,7 +40,18 @@ cd ..
 
 ### 🤖 Android Setup
 
-Typically, auto-linking handles everything for Android. However, ensure that your `minSdkVersion` in `android/build.gradle` is set to the minimum version required by the Entrupy SDK (usually API 24+).
+Auto-linking handles the project setup for Android, but since the Entrupy Android SDK is hosted on a private GitHub Maven registry, you MUST provide GitHub credentials to download it during the build process.
+
+1. Ensure your `minSdkVersion` in your app's `android/build.gradle` is set to API 24 or higher.
+2. Add your GitHub credentials. You can either set them as environment variables (`GITHUB_USER` and `GITHUB_TOKEN`) or add them to your `~/.gradle/gradle.properties` file:
+
+```properties
+# ~/.gradle/gradle.properties
+gpr.user=YOUR_GITHUB_USERNAME
+gpr.token=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
+```
+
+If these are missing, your Android build will fail with a 401 Unauthorized error when attempting to fetch `com.entrupy:sdk`.
 
 ---
 
@@ -51,7 +62,7 @@ Here is a complete example of how to use the SDK in your app:
 ```tsx
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-import { startCapture, generateAuthorizationRequest } from 'react-native-entrupy';
+import { startCapture, generateAuthorizationRequest } from '@hituchhimpa/react-native-entrupy';
 
 export default function App() {
   const [status, setStatus] = useState<string>('Ready');
