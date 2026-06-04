@@ -17,6 +17,20 @@ private const val TAG = "EntrupyModule"
 class EntrupyModule(reactContext: ReactApplicationContext) :
   NativeEntrupySpec(reactContext) {
 
+  init {
+      val app = reactContext.applicationContext as? android.app.Application
+      if (app != null) {
+          try {
+              EntrupyApp.init(app)
+              Log.d(TAG, "EntrupyApp initialized successfully in module.")
+          } catch (e: Exception) {
+              Log.e(TAG, "EntrupyApp.init failed", e)
+          }
+      } else {
+          Log.e(TAG, "Failed to get Application context for EntrupyApp.init")
+      }
+  }
+
   override fun getName() = NAME
 
   @ReactMethod

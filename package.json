@@ -1,20 +1,20 @@
 {
   "name": "@hituchhimpa/react-native-entrupy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React Native wrapper for Entrupy SDK",
-  "main": "./lib/module/index.js",
-  "types": "./lib/typescript/src/index.d.ts",
+  "main": "./dist/module/index.js",
+  "types": "./dist/typescript/src/index.d.ts",
   "exports": {
     ".": {
       "source": "./src/index.tsx",
-      "types": "./lib/typescript/src/index.d.ts",
-      "default": "./lib/module/index.js"
+      "types": "./dist/typescript/src/index.d.ts",
+      "default": "./dist/module/index.js"
     },
     "./package.json": "./package.json"
   },
   "files": [
     "src",
-    "lib",
+    "dist",
     "android",
     "ios",
     "cpp",
@@ -33,7 +33,7 @@
   ],
   "scripts": {
     "example": "yarn workspace react-native-entrupy-example",
-    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build dist",
     "prepare": "bob build",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -46,14 +46,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hituchhimpa/react-native-entrupy.git"
+    "url": "git+https://github.com/hituchhimpa7/react-native-entrupy.git"
   },
-  "author": "hituchhimpa <hituchhimpa@example.com> (https://github.com/hituchhimpa)",
+  "author": "hituchhimpa <hituchhimpa@example.com> (https://github.com/hituchhimpa7)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hituchhimpa/react-native-entrupy/issues"
+    "url": "https://github.com/hituchhimpa7/react-native-entrupy/issues"
   },
-  "homepage": "https://github.com/hituchhimpa/react-native-entrupy#readme",
+  "homepage": "https://github.com/hituchhimpa7/react-native-entrupy#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -89,7 +89,7 @@
   "packageManager": "yarn@4.11.0",
   "react-native-builder-bob": {
     "source": "src",
-    "output": "lib",
+    "output": "dist",
     "targets": [
       [
         "module",
@@ -124,7 +124,7 @@
     "preset": "@react-native/jest-preset",
     "modulePathIgnorePatterns": [
       "<rootDir>/example/node_modules",
-      "<rootDir>/lib/"
+      "<rootDir>/dist/"
     ]
   },
   "create-react-native-library": {

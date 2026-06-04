@@ -1,5 +1,8 @@
 # react-native-entrupy
 
+[![GitHub repo](https://img.shields.io/badge/GitHub-hituchhimpa7%2Freact--native--entrupy-blue?logo=github)](https://github.com/hituchhimpa7/react-native-entrupy)
+[![npm version](https://badge.fury.io/js/@hituchhimpa%2Freact-native-entrupy.svg)](https://www.npmjs.com/package/@hituchhimpa/react-native-entrupy)
+
 A robust, developer-friendly React Native wrapper for the Entrupy SDK. This library allows you to easily integrate Entrupy's authentication and capture services into your React Native iOS and Android applications.
 
 ---
@@ -36,22 +39,31 @@ pod install
 cd ..
 ```
 
-*Note: Make sure your iOS deployment target in `Podfile` matches the Entrupy SDK minimum requirements (usually iOS 13.0+).*
+_Note: Make sure your iOS deployment target in `Podfile` matches the Entrupy SDK minimum requirements (usually iOS 13.0+)._
 
 ### 🤖 Android Setup
 
 Auto-linking handles the project setup for Android, but since the Entrupy Android SDK is hosted on a private GitHub Maven registry, you MUST provide GitHub credentials to download it during the build process.
 
 1. Ensure your `minSdkVersion` in your app's `android/build.gradle` is set to API 24 or higher.
-2. Add your GitHub credentials. You can either set them as environment variables (`GITHUB_USER` and `GITHUB_TOKEN`) or add them to your `~/.gradle/gradle.properties` file:
+2. Add the Entrupy Maven repository to your root `android/build.gradle` under the `allprojects` > `repositories` block. You MUST provide your GitHub credentials to download it. You can set them as environment variables (`GITHUB_USER` and `GITHUB_TOKEN`) or add them to your `~/.gradle/gradle.properties`:
 
-```properties
-# ~/.gradle/gradle.properties
-gpr.user=YOUR_GITHUB_USERNAME
-gpr.token=YOUR_GITHUB_PERSONAL_ACCESS_TOKEN
+```gradle
+allprojects {
+    repositories {
+        // ... other repositories ...
+        maven {
+            url = uri("https://maven.pkg.github.com/entrupy/entrupy-sdk-android")
+            credentials {
+                username = providers.gradleProperty("gpr.user").orNull ?: providers.environmentVariable("GITHUB_USER").orNull ?: ""
+                password = providers.gradleProperty("gpr.token").orNull ?: providers.environmentVariable("GITHUB_TOKEN").orNull ?: ""
+            }
+        }
+    }
+}
 ```
 
-If these are missing, your Android build will fail with a 401 Unauthorized error when attempting to fetch `com.entrupy:sdk`.
+If these are missing, your Android build will fail with a 401 Unauthorized or "Could not find com.entrupy:sdk" error during the final linking phase.
 
 ---
 
@@ -62,7 +74,10 @@ Here is a complete example of how to use the SDK in your app:
 ```tsx
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-import { startCapture, generateAuthorizationRequest } from '@hituchhimpa/react-native-entrupy';
+import {
+  startCapture,
+  generateAuthorizationRequest,
+} from '@hituchhimpa/react-native-entrupy';
 
 export default function App() {
   const [status, setStatus] = useState<string>('Ready');
@@ -71,7 +86,12 @@ export default function App() {
     try {
       setStatus('Starting capture session...');
       // Make sure your bundle ID / package name is registered on Entrupy!
-      const isSuccess = await startCapture('Bags', 'Gucci', 'Handbag', 'item_12345');
+      const isSuccess = await startCapture(
+        'Bags',
+        'Gucci',
+        'Handbag',
+        'item_12345'
+      );
       setStatus(`Capture Success: ${isSuccess}`);
     } catch (error: any) {
       setStatus(`Error: ${error.message}`);
@@ -99,6 +119,7 @@ const styles = StyleSheet.create({
 Sometimes React Native caches can cause issues. If you face any native build errors, run the following commands to clean your project:
 
 ### Clean Android
+
 ```sh
 cd android
 ./gradlew clean
@@ -108,6 +129,7 @@ npx react-native run-android
 ```
 
 ### Clean iOS
+
 ```sh
 cd ios
 rm -rf Pods Podfile.lock
@@ -118,6 +140,7 @@ npx react-native run-ios
 ```
 
 ### Clean React Native Cache (Metro)
+
 ```sh
 npm start -- --reset-cache
 # or with Yarn
@@ -138,4 +161,4 @@ MIT
 
 ---
 
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+Made with ❤️ by [hituchhimpa7](https://github.com/hituchhimpa7)

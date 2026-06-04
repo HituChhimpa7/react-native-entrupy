@@ -1,0 +1,6 @@
+.env
+.env.*
+tests/
+__tests__/
+.github/
+*.md
