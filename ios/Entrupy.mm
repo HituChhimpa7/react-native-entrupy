@@ -1,6 +1,6 @@
 #import "Entrupy.h"
 #import <React/RCTUtils.h>
-@import EntrupySDK;
+#import <EntrupySDK/EntrupySDK.h>
 
 @interface Entrupy () <EntrupyLoginDelegate, EntrupyCaptureDelegate>
 @property (nonatomic, copy) void (^loginResolve)(id result);
@@ -128,11 +128,6 @@ RCT_EXPORT_MODULE()
     (const facebook::react::ObjCTurboModule::InitParams &)params
 {
     return std::make_shared<facebook::react::NativeEntrupySpecJSI>(params);
-}
-
-+ (NSString *)moduleName
-{
-  return @"Entrupy";
 }
 
 @end

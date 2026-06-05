@@ -1,6 +1,6 @@
 {
   "name": "@hituchhimpa/react-native-entrupy",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "React Native wrapper for Entrupy SDK",
   "main": "./dist/module/index.js",
   "types": "./dist/typescript/src/index.d.ts",
